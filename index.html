@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Valentine?</title>
+
+  <!-- Cinzel Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cinzel', serif;
+    }
+
+    body {
+      height: 100vh;
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        url("bg.jpg") no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* HEART (BACKGROUND ONLY) */
+    .heart {
+      position: absolute;
+      width: 300px;
+      height: 270px;
+      background: #ff2f6d;
+      transform: rotate(-45deg);
+      animation: beat 1.2s infinite;
+      z-index: 1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 270px;
+      background: #ff2f6d;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -150px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 150px;
+      top: 0;
+    }
+
+    /* TEXT LAYER */
+    .overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+
+    .overlay h1 {
+      font-size: 28px;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.8);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .buttons button {
+      background: white;
+      color: #ff2f6d;
+      border: none;
+      padding: 10px 22px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .buttons button:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-45deg) scale(1.12); }
+    }
+
+    /* FLOATING HEARTS + LETTERS */
+    .floating {
+      position: absolute;
+      bottom: -30px;
+      color: rgba(255, 47, 109, 0.85);
+      font-size: 22px;
+      animation: floatUp linear infinite;
+      z-index: 0;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .overlay h1 {
+        font-size: 24px;
+      }
+
+      .heart {
+        width: 260px;
+        height: 240px;
+      }
+
+      .heart::before,
+      .heart::after {
+        width: 260px;
+        height: 240px;
+      }
+
+      .heart::before { top: -130px; }
+      .heart::after { left: 130px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="nothing.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- HEART -->
+  <div class="heart"></div>
+
+  <!-- TEXT + BUTTONS (IN FRONT) -->
+  <div class="overlay">
+    <h1>
+      Will you be<br>
+      my Valentine?
+    </h1>
+    <div class="buttons">
+      <button onclick="sayLove()">Yes</button>
+      <button onclick="sayLove()">Yes</button>
+    </div>
+  </div>
+
+  <script>
+    function sayLove() {
+      document.getElementById("bgMusic").play();
+      alert("i love you so much, baby");
+    }
+
+    const letters = ["❤", "J", "A", "Y", "M", "E", "E"];
+
+    setInterval(() => {
+      const el = document.createElement("div");
+      el.className = "floating";
+      el.innerHTML = letters[Math.floor(Math.random() * letters.length)];
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.fontSize = Math.random() * 18 + 18 + "px";
+      el.style.animationDuration = Math.random() * 3 + 4 + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    }, 350);
+  </script>
+
+</body>
+</html>
